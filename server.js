@@ -2,15 +2,13 @@ const express = require("express");
 const cors = require("cors");
 const dbConfig = require("./app/config/db.config");
 
-console.log(dbConfig);
-
 const app = express();
 
-// var corsOptions = {
-//   origin: "http://localhost:8081",
-// };
+var corsOptions = {
+  origin: "http://localhost:8081",
+};
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 // parse requests of content-type - application/json
 app.use(express.json());
@@ -76,6 +74,9 @@ function initial() {
 app.get("/", (req, res) => {
   res.json({ message: "Welcome to choppings application." });
 });
+
+require("./app/routes/auth.routes")(app);
+require("./app/routes/user.routes")(app);
 
 // set port, listen for requests
 const PORT = 5002;
